@@ -15,13 +15,10 @@ $(document).ready(function() {
       map.setView(new L.LatLng(regions[region_id]['lat'], regions[region_id]['lon']), regions[region_id]['zoom']);
     });
     var ConstructionIcon = L.Icon.Default.extend({ options: { iconUrl: '/static/img/under_construction_icon.png', iconSize: [40, 35] } });
+    var backgroundLayer = MQ.mapLayer();
     constructionIcon = new ConstructionIcon();
-    map = new L.Map('map', { attributionControl: false });
-    var backgroundLayer = new L.TileLayer('https://otile1-s.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpg', {
-      maxZoom: 18,
-      minZoom: 4
-    });
-    L.control.attribution({ position: 'bottomleft', 'prefix': false }).addAttribution('Map Data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Tiles courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a>,  by <a href="http://leafletjs.com/">Leaflet</a>.'). addTo(map);
+    //L.control.attribution({ position: 'bottomleft', 'prefix': false }).addAttribution('Map Data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Tiles courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a>,  by <a href="http://leafletjs.com/">Leaflet</a>.'). addTo(map);
+    map = new L.Map('map');
     map.setView(new L.LatLng(regions[0]['lat'], regions[0]['lon']), regions[0]['zoom']).addLayer(backgroundLayer);
     if ($('#flashes').exists())
       close_sidebar();

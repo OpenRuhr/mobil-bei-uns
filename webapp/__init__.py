@@ -1,11 +1,11 @@
 # encoding: utf-8
 
 from flask import Flask
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.mail import Mail
-from flask.ext.security import Security
-from flask.ext.bootstrap import Bootstrap
-from flask.ext.basicauth import BasicAuth
+from flask_sqlalchemy import SQLAlchemy
+from flask_mail import Mail
+from flask_security import Security
+from flask_bootstrap import Bootstrap
+from flask_basicauth import BasicAuth
 from werkzeug.contrib.cache import MemcachedCache
 
 

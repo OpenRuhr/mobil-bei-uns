@@ -415,7 +415,7 @@ class AachenStadt(DefaultSource):
       current_constuction.begin = datetime.datetime(int(period[0][6:10]), int(period[0][3:5]), int(period[0][0:2]), 0, 0, 0)
       current_constuction.end = datetime.datetime(int(period[1][6:10]), int(period[1][3:5]), int(period[1][0:2]), 23, 59, 59)
       current_construction.updated_at = datetime.datetime.now()
-      position = self.gk2latlon(construction['geometry']['coordinates'][1], construction['geometry']['coordinates'][0], 2)
+      position = self.gk2latlon(construction['geometry']['coordinates'][0][1], construction['geometry']['coordinates'][0][0], 2)
       current_construction.lat = position['lat']
       current_construction.lon = position['lon']
       current_construction.licence_name = self.licence_name
@@ -492,8 +492,8 @@ class KoelnStadt(DefaultSource):
   id = 3
   title = u'Stadt Köln'
   url = u'http://offenedaten-koeln.de/dataset/baustellen-k%C3%B6ln'
-  source_url = u'http://geoportal1.stadt-koeln.de/ArcGIS/rest/services/WebVerkehr_DataOSM/MapServer/0/query?text=&geometry=&geometryType=esriGeometryPoint&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&objectIds=&where=objectid%20is%20not%20null&time=&returnCountOnly=false&returnIdsOnly=false&returnGeometry=true&maxAllowableOffset=&outSR=4326&outFields=%2A&f=json'
-  source_metadata_url = u'http://geoportal1.stadt-koeln.de/ArcGIS/rest/services/WebVerkehr_DataOSM/MapServer/0?f=json&pretty=true'
+  source_url = u'https://geoportal.stadt-koeln.de/arcgis/rest/services/WebVerkehr_DataOSM_66/MapServer/0/query?text=&geometry=&geometryType=esriGeometryPoint&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&objectIds=&where=objectid%20is%20not%20null&time=&returnCountOnly=false&returnIdsOnly=false&returnGeometry=true&maxAllowableOffset=&outSR=4326&outFields=%2A&f=json'
+  source_metadata_url = u'https://geoportal.stadt-koeln.de/arcgis/rest/services/WebVerkehr_DataOSM_66/MapServer/0?f=json&pretty=true'
   contact_company = u'Stadt Köln'
   contact_name = u'Stadt Köln'
   contact_mail = u'e-government@stadt-koeln.de'
@@ -601,9 +601,9 @@ class BonnStadt(DefaultSource):
 
 class ZuerichStadt(DefaultSource):
   id = 5
-  title = u'Stadt Bonn'
+  title = u'Stadt Zürich'
   url = 'https://www.stadt-zuerich.ch/portal/de/index/ogd/daten/tiefbaustelle.html'
-  source_url = 'https://data.stadt-zuerich.ch/storage/f/tiefbaustelle/tiefbaustelle.json'
+  source_url = 'https://data.stadt-zuerich.ch/dataset/tiefbaustelle/resource/827dacd6-2aaa-4db4-b951-7de41596a2f5/download/tiefbaustelle.json'
   contact_company = u'Stadt Zürich'
   contact_name = u'Stadt Zürich'
   contact_mail = u'opendata@zuerich.ch'
@@ -675,7 +675,7 @@ class HamburgStadt(DefaultSource):
   id = 6
   title = u'Stadt Hamburg'
   url = u'http://suche.transparenz.hamburg.de/dataset/baustellen-hamburg'
-  source_url = u'http://geodienste-hamburg.de/HH_WFS_BWVI_opendata?service=WFS&request=GetFeature&VERSION=1.1.0&typename=verkehr_baustellen_prod'
+  source_url = u'http://geodienste.hamburg.de/HH_WFS_Verkehr_opendata?service=WFS&request=GetFeature&VERSION=1.1.0&typename=verkehr_baustellen_prod'
   contact_company = u'Freie und Hansestadt Hamburg, Behörde für Wirtschaft Verkehr und Innovation'
   contact_name = u'Stadt Hamburg'
   contact_mail = u'transparenzportal@kb.hamburg.de'
@@ -800,6 +800,7 @@ class BrandenburgMdm(DefaultSource):
   def sync(self):
     self.sync_mdm()
 
+
 class BremenMdm(DefaultSource):
   id = 11
   title = u'Bremen (MDM)'
@@ -815,6 +816,7 @@ class BremenMdm(DefaultSource):
   
   def sync(self):
     self.sync_mdm()
+
 
 class HamburgMdm(DefaultSource):
   id = 12

@@ -7,7 +7,7 @@ Mobil bei Uns benötigt einen Root-Server.
 Es werden einige Pakete benötigt. Für einen Ubuntu 14.04 Server wären das folgende Pakete:
 
 ```
-apt-get install libxml2-dev libxslt1-dev
+apt-get install libxml2-dev libxslt1-dev proj-bin
 ```
 
 Außerdem muss Mobil bei Uns heruntergeladen werden:
@@ -18,7 +18,7 @@ cd /mein/mobil-bei-uns/ordner/
 git clone https://github.com/OpenRuhr/mobil-bei-uns.git .
 ```
 
-Des weiteren müss das Virtual Enviroment erstellt werden:
+Im Anschluss muss das Virtual Enviroment erstellt werden:
 
 ```
 cd /mein/mobil-bei-uns/ordner/
@@ -26,6 +26,13 @@ virtualenv --no-site-packages venv
 source venv/bin/activate
 pip install -upgrade pip setuptools
 pip install -r requirements.txt
+```
+
+Des Weiteren brauchen wir eine config.py:
+
+```
+cp config_dist.py config.py
+vim config.py
 ```
 
 ## Anbindung des Mobilitäts Daten Marktplatzes MDM
@@ -42,6 +49,13 @@ Im Header beider generierter Dateien sind einige Bag Attributes, die wir lösche
 
 ```
 openssl rsa -in mein-zertifikat.enc.key -out mein-zertifikat.key
+```
+
+Außerdem brauchen wir noch eine komplette Zertifikat-Chain.
+
+```
+cp mein-zertifikat.crt mein-zertifikat.chain.ca
+vim mein-zertifikat.chain.ca
 ```
 
 Außerdem wird noch die Location Code List benötigt. Diese kann [auf den Seiten des BASt beantragt werden](http://www.bast.de/DE/Verkehrstechnik/Fachthemen/v2-LCL/location-code-list-nutzungsbedingungen.html).
@@ -75,3 +89,16 @@ pyton runserver.py
 ```
 
 Unter http://server-url:5000 kann dann Mobil bei Uns abgerufen werden. Auf einem produktiven Server empfiehlt sich der Einsatz von [gunicorn](http://gunicorn.org/).
+
+Gestartet werden kann die Webapplikation dann mit Hilfe von Supervisord. Die Konfiguration könnt dort wie folgt aussehen:
+
+```
+[program:mobil-bei-uns]
+command=/mein/mobil-bei-uns/ordner/venv/bin/python /mein/mobil-bei-uns/ordner/venv/bin/gunicorn --name=mobil-bei-uns --user=mobil-bei-uns --group=mobil-bei-uns --bind=unix:/var/run/mobil-bei-uns.sock webapp:app
+process_name=%(program_name)s
+directory=/mein/mobil-bei-uns/ordner/
+environment=PATH="/mein/mobil-bei-uns/ordner",LANG="en_US.utf8"
+autostart=true
+autorestart=true
+stopsignal=QUIT
+```

@@ -15,3 +15,4 @@ bson
 lxml
 cssselect
 python-dateutil
+mysql-python

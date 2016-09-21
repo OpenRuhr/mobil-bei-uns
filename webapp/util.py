@@ -53,7 +53,7 @@ def sync():
     source_object.sync()
 
 def test():
-  foo = sources.SaarlandMdm()
+  foo = sources.BremenMdm()
   foo.sync()
 
 def geocode(location_string):
